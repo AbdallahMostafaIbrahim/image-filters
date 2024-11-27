@@ -103,9 +103,15 @@ print("Choose the type of filter: \n1. Gaussian Blur\n2. Mean Blur\n3. Mirror Ho
 choice = int(input())
 
 if choice == 1:
-    blurred_image_array = apply_gaussian_blur(image_array, kernel_size=5, sigma=5/6)
+    kernel_size = int(input("Enter kernel size , usually 15 is a good choice: "))
+    if kernel_size % 2 == 0:
+        print("Kernel size must be an odd number.")
+    blurred_image_array = apply_gaussian_blur(image_array, kernel_size=kernel_size, sigma=kernel_size/6)
 elif choice == 2:
-    blurred_image_array = apply_mean_blur(image_array, kernel_size=15)
+    kernel_size = int(input("Enter kernel size (provide an odd number, usually 15 is a good choice): "))
+    if kernel_size % 2 == 0:
+        print("Kernel size must be an odd number.")
+    blurred_image_array = apply_mean_blur(image_array, kernel_size=kernel_size)
 elif choice == 3:
     blurred_image_array = mirror_image(image_array, mode='horizontal')
 elif choice == 4:
@@ -118,8 +124,12 @@ else:
 blurred_image = Image.fromarray(blurred_image_array)
 
 # Save the output image with a timestamped filename day-month-year_hour-minute-second
-current_time = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-output_filename = f"output_image-{choice}-{current_time}.jpg"
+current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+choiceToName = {1: "GaussianBlur", 2: "MeanBlur", 3: "MirrorHorizontal", 4: "MirrorVertical"}
+# Get Image name and extension from path
+image_name = image_path.split("/")[-1].split(".")[0]
+image_extension = image_path.split("/")[-1].split(".")[1]
+output_filename = f"{image_name}-{choiceToName[choice]}-{current_time}.{image_extension}"
 blurred_image.save(output_filename)
 
 print(f"Output image saved as {output_filename}")
