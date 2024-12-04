@@ -124,7 +124,7 @@ else:
 blurred_image = Image.fromarray(blurred_image_array)
 
 # Save the output image with a timestamped filename day-month-year_hour-minute-second
-current_time = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+current_time = datetime.datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
 choiceToName = {1: "GaussianBlur", 2: "MeanBlur", 3: "MirrorHorizontal", 4: "MirrorVertical"}
 # Get Image name and extension from path
 image_name = image_path.split("/")[-1].split(".")[0]
